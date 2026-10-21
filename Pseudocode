@@ -1,0 +1,29 @@
+PROCEDURE RunRideCycle(cart)
+
+    LOOP FOREVER
+        LoadCart(cart)
+        LaunchCart(cart)
+
+        // Chain lift to the top of the ride
+        PowerChainLift(cart)
+        WAIT UNTIL cart.position == TOP
+
+        // Tunnel and show
+        WAIT UNTIL cart.isInsideTunnel
+        StartVideo()
+        WHILE cart.isMoving AND video.isPlaying
+            PlayVideo()
+            PlaySounds()
+        END WHILE
+
+        // Dragon, then drop
+        StopCart(cart, at = DRAGON)
+        DropCartVertically(cart)
+
+        // Leaderboard and return
+        DriveThrough(cart, LEADERBOARD_AREA)
+        ReturnToStation(cart)
+        UnloadCart(cart)
+    END LOOP
+
+END PROCEDURE
