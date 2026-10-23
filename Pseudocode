@@ -10,8 +10,10 @@ PROCEDURE RunRideCycle(cart)
 
         // Tunnel and show
         WAIT UNTIL cart.isInsideTunnel
-        StartVideo()
+        StartGame()
         WHILE cart.isMoving AND video.isPlaying
+            If rider shoots monster then
+                rider + 100 points
             PlayVideo()
             PlaySounds()
         END WHILE
@@ -22,6 +24,7 @@ PROCEDURE RunRideCycle(cart)
 
         // Leaderboard and return
         DriveThrough(cart, LEADERBOARD_AREA)
+        Show Player's Score
         ReturnToStation(cart)
         UnloadCart(cart)
     END LOOP
